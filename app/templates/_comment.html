@@ -1,0 +1,17 @@
+<li class="list-group-item list-group-item-action flex-column">
+    <div class="d-flex w-100 justify-content-between">
+        <h5 class="mb-1">
+            <a href="{{ url_for('main.userid', user_id=comment.user_id) }}">{{ comment.user_id }}
+
+            </a>
+
+        </h5>
+        <small data-toggle="tooltip" data-placement="top" data-delay="500"
+               data-timestamp="{{ comment.timestamp.strftime('%Y-%m-%dT%H:%M:%SZ') }}">
+            {{ moment(comment.timestamp).fromNow() }}
+        </small>
+    </div>
+
+    <p class="mb-1">{{ comment.body }}</p>
+
+</li>
