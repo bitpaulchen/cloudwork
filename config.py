@@ -11,7 +11,7 @@ class Config(object):
     #     'postgres://', 'postgresql://') or \
     #     'sqlite:///' + os.path.join(basedir, 'app.db')
 
-    SQLALCHEMY_DATABASE_URI = "mysql://root:root@localhost/microblog"
+    SQLALCHEMY_DATABASE_URI = "mysql+pymysql://root:root@localhost/microblog"
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     LOG_TO_STDOUT = os.environ.get('LOG_TO_STDOUT')
     MAIL_SERVER = "smtp.126.com"

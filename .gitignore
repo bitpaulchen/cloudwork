@@ -1,2 +1,6 @@
 .idea
 .DS_Store
+venv
+.logs
+migrations
+__pycache__
