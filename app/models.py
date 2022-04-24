@@ -82,16 +82,41 @@ def load_user(id):
     return User.query.get(int(id))
 
 
+
+import requests
+
+
+AWS_API_GATEWAY_POSTS = "https://rutkf5uzhl.execute-api.us-east-1.amazonaws.com/"
+AWS_API_GATEWAY_COMMENTS = "https://5r0by4zgua.execute-api.us-east-1.amazonaws.com/"
+
+def getPostBody(post_uid):
+    r = requests.get(
+        AWS_API_GATEWAY_POSTS+'getArticle?ids=%s' % post_uid)
+    return r.json()[0].get("body")
+
+
+def getCommentBody(comment_uid):
+    r = requests.get(
+        AWS_API_GATEWAY_COMMENTS+'getComment?ids=%s' % comment_uid)
+    return r.json()[0].get("body")
+
+def createComment(body):
+    r = requests.get(
+        AWS_API_GATEWAY_COMMENTS + 'getComment?ids=%s' % body)
+    return
+
+
 class Post(db.Model):
     __searchable__ = ['body']
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(140))
-    body = db.Column(db.String(140))
+    post_uid = db.Column(db.String(140))
     timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 
     comments = db.relationship('Comment', back_populates='post', cascade='all, delete-orphan')
 
+    body = getPostBody(post_uid)
 
     def __repr__(self):
         return '<Post {}>'.format(self.body)
@@ -99,10 +124,11 @@ class Post(db.Model):
 
 
 
+
 class Comment(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-    body = db.Column(db.Text)
+    comment_uid = db.Column(db.String(140))
     from_admin = db.Column(db.Boolean, default=False)# 是否作者
     reviewed = db.Column(db.Boolean, default=False)
     timestamp = db.Column(db.DateTime, default=datetime.utcnow, index=True)
@@ -110,8 +136,14 @@ class Comment(db.Model):
     post_id = db.Column(db.Integer, db.ForeignKey('post.id'))
     post = db.relationship('Post', back_populates='comments')
 
+    body = getCommentBody(comment_uid)
+
     # user = db.relationship('User', back_populates='comments')
 
     def __repr__(self):
         return '<Comment {} comment on {} :  {}>'.format(self.user_id, self.post_id, self.body)
+
+
+
+
 
