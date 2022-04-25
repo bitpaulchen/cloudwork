@@ -30,13 +30,6 @@ class Config(object):
 
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     LOG_TO_STDOUT = os.environ.get('LOG_TO_STDOUT')
-    MAIL_SERVER = "smtp.126.com"
-    MAIL_PORT = 25
-    MAIL_USE_TLS = 1
-    MAIL_USERNAME = "chengpemgbit@126.com"
-    MAIL_PASSWORD = "BMIMZRJOKOJTWWNE"
-    ADMINS = ['chengpemgbit@126.com']
-    LANGUAGES = ['en', 'es']
     MS_TRANSLATOR_KEY = os.environ.get('MS_TRANSLATOR_KEY')
     POSTS_PER_PAGE = 25
 
