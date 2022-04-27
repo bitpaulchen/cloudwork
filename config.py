@@ -7,8 +7,6 @@ load_dotenv(os.path.join(basedir, '.env'))
 
 # 定义一些配置项
 
-import boto3
-
 
 class Config(object):
     print(os.environ)
@@ -17,6 +15,7 @@ class Config(object):
     AWS_RDS_NAME = "root"
     AWS_RDS_PWD = "12345678"
     AWS_RDS_DATABASE = "cloudwork"
+
 
     AWS_ACCESS_KEY = "ASIA2ZZJ23VSLSFCVKEK"
     AWS_SECRET_KEY = "BquhbOF0uurQA51r/cIgS5AL3Y5U8QZtAGX1ljkx"

@@ -27,15 +27,20 @@
                     {% if current_user.is_anonymous %}
                     <li><a href="{{ url_for('auth.login') }}">{{ _('Login') }}</a></li>
                     {% else %}
-                    <li><a href="{{ url_for('main.user', username=current_user.username) }}">{{ current_user.username }}</a></li>
+
+                    <img src="https://mdbcdn.b-cdn.net/img/new/avatars/2.webp" class="rounded-circle" style="width: 40px;"
+  alt="Avatar" />
+                    <li><a href="{{ url_for('main.user', username=current_user.username) }}"> Hello, {{ current_user.username }}</a></li>
+
                     <li><a href="{{ url_for('auth.logout') }}">{{ _('Logout') }}</a></li>
+
+
                     {% endif %}
                 </ul>
             </div>
         </div>
     </nav>
 {% endblock %}
-
 {% block content %}
     <div class="container">
         {% with messages = get_flashed_messages() %}
