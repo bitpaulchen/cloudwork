@@ -154,9 +154,9 @@ def translate_text():
 @login_required
 def show_post(post_id):
     post = Post.query.get_or_404(post_id)
+    post.body = post.get_body()
     form = CommentForm()
     if form.validate_on_submit():
-
         comment = Comment(body=form.post.data, post_id=post_id, user_id=current_user.id)
         db.session.add(comment)
         db.session.commit()
@@ -170,14 +170,11 @@ def show_post(post_id):
         page, per_page)
     comments = pagination.items
 
+
+
+
+
     return render_template('post.html', post=post, pagination=pagination, comments=comments, form=form)
-
-
-
-@bp.route('/show_category')
-@login_required
-def show_category():
-    return jsonify({"show_category":1})
 
 
 
@@ -187,7 +184,15 @@ def show_category():
 def editpost():
     form = PostForm()
     if form.validate_on_submit():
-        post = Post(body=form.body.data, user_id=current_user.id, title=form.title.data)
+        post = Post()
+        postuid = post.post_body(form.body.data)
+        if not postuid:
+            flash(_('Post fail!'))
+            return redirect(url_for('main.index'))
+        post.post_uid = postuid
+        post.user_id = current_user.id
+        post.title = form.title.data
+        post.short_desc = form.body.data[:100]
         db.session.add(post)
         db.session.flush()
         db.session.commit()
@@ -198,7 +203,8 @@ def editpost():
 
 
 
-@bp.route('/user/<user_id>')
+
+@bp.route('/userid/<user_id>')
 @login_required
 def userid(user_id):
     user = User.query.filter_by(id=user_id).first_or_404()
@@ -212,4 +218,5 @@ def userid(user_id):
     form = EmptyForm()
     return render_template('user.html', user=user, posts=posts.items,
                            next_url=next_url, prev_url=prev_url, form=form)
+
 

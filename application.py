@@ -1,11 +1,6 @@
-from app import create_app, db, cli
-from app.models import User, Post
+from app import create_app
 
 application = create_app()
-# cli.register(app)
-
-
-
 
 
 if __name__ == '__main__':
